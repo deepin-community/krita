@@ -1,0 +1,27 @@
+Author: Pino Toscano <pino@debian.org>
+Description: Require xtl when xsimd is found
+ xsimd in Debian is built with -DENABLE_XTL_COMPLEX=ON, which makes the upstream
+ build system require the "xtl" cmake target when using the "xsimd" cmake
+ target. The problem is that the cmake config bits of xsimd do not have this
+ requirement (due to ENABLE_XTL_COMPLEX=ON) anywhere, so simply looking for
+ "xsimd" in cmake to use it gives a "xsimd" target that will try to link to a
+ "xtl" library (since there is no "xtl" target available. To workaround this
+ situation, if xsimd was found, then require also xtl: this will make sure there
+ is a "xtl" cmake target.
+ .
+ This actually is a bug in the cmake config bits of xsimd: either setting
+ ENABLE_XTL_COMPLEX=ON should not persist in the installed cmake bits, or the
+ bits must remember ENABLE_XTL_COMPLEX=ON and require xtl.
+Last-Updated: 2022-06-26
+Forwarded: no
+
+--- a/cmake/modules/Findxsimd.cmake
++++ b/cmake/modules/Findxsimd.cmake
+@@ -11,6 +11,7 @@ find_package(xsimd QUIET NO_MODULE
+ )
+ 
+ if(xsimd_FOUND)
++    find_package(xtl QUIET REQUIRED)
+     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/xsimd")
+     include(xsimdMacros)
+     xsimd_set_preferred_compiler_flags()

@@ -1,15 +1,115 @@
-Source: template-repository
-Section: unknown
+Source: krita
+Section: kde
 Priority: optional
-Maintainer: Tsic404 <liuheng@deepin.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.3
-Homepage: https://github.com/deepin-community/template-repository
-#Vcs-Browser: https://salsa.debian.org/debian/deepin-community-template-repository
-#Vcs-Git: https://salsa.debian.org/debian/deepin-community-template-repository.git
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Pino Toscano <pino@debian.org>,
+Build-Depends: cmake (>= 3.16.0~),
+               debhelper-compat (= 13),
+               extra-cmake-modules (>= 5.22.0),
+               gettext,
+               libboost-system-dev (>= 1.65~),
+               libeigen3-dev (>= 3.3.0~),
+               libexiv2-dev (>= 0.16~),
+               libfftw3-dev,
+               libfontconfig-dev (>= 2.13.1~),
+               libfreetype-dev (>= 2.11.0~),
+               libfribidi-dev,
+               libgif-dev,
+               libgsl-dev,
+               libharfbuzz-dev (>= 4.0.0~),
+               libheif-dev (>= 1.11.0~),
+               libimmer-dev,
+               libjpeg-dev,
+               libjxl-dev (>= 0.7.0-1~) [linux-any],
+               libkf5completion-dev (>= 5.44.0),
+               libkf5config-dev (>= 5.44.0),
+               libkf5coreaddons-dev (>= 5.44.0),
+               libkf5crash-dev (>= 5.44.0),
+               libkf5guiaddons-dev (>= 5.44.0),
+               libkf5i18n-dev (>= 5.44.0),
+               libkf5itemviews-dev (>= 5.44.0),
+               libkf5kdcraw-dev,
+               libkf5widgetsaddons-dev (>= 5.44.0),
+               libkf5windowsystem-dev (>= 5.44.0),
+               libkseexpr-dev (>= 4.0.0.0~),
+               liblager-dev,
+               liblcms2-dev (>= 2.4~),
+               libmlt-dev (>= 7~),
+               libmlt++-dev (>= 7~),
+               libmypaint-dev (>= 1.4.0~),
+#               libopencolorio-dev (>= 1.1.1~),
+               libopenexr-dev,
+               libopenjp2-7-dev (>= 2.3.0~),
+               libpng-dev,
+               libpoppler-qt5-dev,
+               libquazip5-dev (>= 0.6~),
+               libqt5opengl5-dev,
+               libqt5svg5-dev (>= 5.12.0~),
+               libqt5x11extras5-dev (>= 5.12.0~),
+               libsdl2-dev,
+               libtiff-dev,
+               libturbojpeg0-dev (>= 1:2.1.3~),
+               libunibreak-dev (>= 5.0~),
+               libwebp-dev (>= 1.2.0~),
+               libxcb-util-dev,
+               libxcb1-dev,
+               libxi-dev,
+               libxsimd-dev (>= 8.1.0~) [any-amd64 any-arm64],
+               libzug-dev,
+               pkgconf,
+               pkg-kde-tools (>= 0.15.16),
+               pyqt5-dev,
+               python3-dev,
+               python3-pyqt5,
+               python3-sipbuild,
+               qtbase5-dev (>= 5.12.0~),
+               qtbase5-private-dev (>= 5.12.0~),
+               qtdeclarative5-dev (>= 5.12.0~),
+               sip-tools,
+               xtl-dev [any-amd64 any-arm64],
+               zlib1g-dev
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://krita.org/
+Vcs-Git: https://salsa.debian.org/qt-kde-team/extras/krita.git
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/extras/krita
 
-Package: template-repository
+Package: krita
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Section: graphics
+Depends: krita-data (>= ${source:Version}), libqt5sql5-sqlite, ${misc:Depends}, ${shlibs:Depends}
+Recommends: python3-pyqt5, qml-module-qtmultimedia
+Suggests: colord, ffmpeg, krita-l10n (>= ${source:Version})
+Description: pixel-based image manipulation program
+ Krita is a creative application for raster images. Whether you want to create
+ from scratch or work with existing images, Krita is for you. You can work with
+ photos or scanned images, or start with a blank slate. Krita supports most
+ graphics tablets out of the box.
+ .
+ Krita is different from other graphics design programs in that it has
+ pluggable brush engines, some supporting brush resources like Gimp brush files,
+ others offering sophisticated simulation of real brushes, and others again
+ offering color mixing and image deformations. Moreover, Krita has full
+ support for graphics tablets, including such features as pressure, tilt and
+ rate, making it a great choice for artists. There are easy to use tools for
+ drawing lines, ellipses and rectangles, and the freehand tool is supported by
+ pluggable "drawing assistants" that help you draw shapes that still have a
+ freehand feeling to them.
+
+Package: krita-data
+Architecture: all
+Section: graphics
+Depends: ${misc:Depends}
+Description: data files for Krita painting program
+ This package contains architecture-independent data files for Krita.
+ .
+ See the krita package for further information.
+
+Package: krita-l10n
+Architecture: all
+Section: localization
+Depends: ${misc:Depends}
+Description: translations for Krita painting program
+ This package contains the translations for Krita, the painting program.
+ .
+ See the krita package for further information.

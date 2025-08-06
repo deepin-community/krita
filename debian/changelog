@@ -1,5 +1,674 @@
-template-repository (1.0-1) unstable; urgency=medium
+krita (1:5.2.9+dfsg-1) unstable; urgency=medium
 
-  * Initial release
+  * New upstream release.
+  * Update the patches:
+    - python3.13.patch: drop, fixed upstream
+  * Drop the python3-legacy-cgi recommend, as upstream switched away from the
+    "cgitb" Python module.
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Pino Toscano <pino@debian.org>  Mon, 03 Feb 2025 20:54:24 +0100
+
+krita (1:5.2.6+dfsg-3) unstable; urgency=medium
+
+  * Team upload.
+  * Cherry-pick commit from upstream to fiX FTBFS with Python 3.13 as the
+    default interpreter (Closes: #1092074).
+
+ -- Stuart Prescott <stuart@debian.org>  Thu, 09 Jan 2025 01:10:54 +1100
+
+krita (1:5.2.6+dfsg-2) unstable; urgency=medium
+
+  * Recommend python3-legacy-cgi to keep using the legacy "cgitb" Python module
+    for now; it is really "required" when using a certain Python plugin, and
+    PyQt is a recommend too, so this is the best solution to not make
+    python3-legacy-cgi with the current the dependency system available.
+    (Closes: #1084630)
+
+ -- Pino Toscano <pino@debian.org>  Wed, 11 Dec 2024 07:33:13 +0100
+
+krita (1:5.2.6+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Pino Toscano <pino@debian.org>  Tue, 01 Oct 2024 19:07:01 +0200
+
+krita (1:5.2.5+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * CI: make the build non-verbose, so the build log fits within the salsa
+    limits.
+  * Update the build dependencies according to the upstream build system:
+    - bump libfreetype-dev to 2.11.0
+  * Do not exclude the '3rdparty' directory anymore when repacking, as it is
+    practically empty now.
+  * Do not exclude the 'winquirks' directory anymore when repacking, as it
+    contains only one GPL 3 source used only on Windows.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 27 Sep 2024 06:54:43 +0200
+
+krita (1:5.2.3+dfsg-1) unstable; urgency=medium
+
+  * Upload to unstable.
+  * New upstream release.
+  * Switch watch file back to the stable releases.
+  * Switch Vcs-* fields back to 'master'.
+  * Update the patches:
+    - upstream_Bump-SIP-ABI-version-to-12.8.patch: refresh
+  * Update install files.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 26 Jun 2024 05:24:01 +0200
+
+krita (1:5.2.3~beta1+dfsg-1) experimental; urgency=medium
+
+  * New upstream development release.
+  * Switch watch file to the unstable releases.
+  * Switch Vcs-* fields to the 'experimental' packaging branch.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 06 Jun 2024 08:31:08 +0200
+
+krita (1:5.2.2+dfsg-3) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.7.0, no changes required.
+  * Temporarily disable the LUT docker, as it needs OpenColorIO, which is out
+    of testing because openvdb has RC bugs
+    - comment out the libopencolorio-dev build dependency
+  * Switch the transitional pkg-config build dependency to pkgconf.
+  * Drop non-existing files from copyright.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 08 May 2024 10:00:35 +0200
+
+krita (1:5.2.2+dfsg-2) unstable; urgency=medium
+
+  * Switch from SIP v4 to v6: (Closes: #964126)
+    - replace the python3-sip-dev build dependency with python3-sipbuild, and
+      sip-tools
+    - backport upstream commit 2d71c47661d43a4e3c1ab0c27803de980bdf2bb2 to build
+      with SIP 6.8+; patch upstream_Bump-SIP-ABI-version-to-12.8.patch
+    - drop the python3-sip recommend, not explicitly needed (pulled by PyQt5)
+  * Drop the krita-gmic recommend, as krita does not use that external plugin
+    anymore.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 13 Jan 2024 14:20:28 +0100
+
+krita (1:5.2.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update the patches:
+    - upstream_Include-cstring-for-std-memcpy.patch: drop, backported from
+      upstream
+  * Add the qtbase5-private-dev build dependency, used even if not explicitly
+    searched by the build system.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 08 Dec 2023 21:46:44 +0100
+
+krita (1:5.2.1+dfsg-2) unstable; urgency=medium
+
+  * Backport upstream commit 9184a2494c72fb7ba7df41251181ce256bcb693f to
+    include <cstring> for std::memcpy(), thus fixing the build; patch
+    upstream_Include-cstring-for-std-memcpy.patch.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 02 Nov 2023 23:07:16 +0100
+
+krita (1:5.2.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 02 Nov 2023 20:25:16 +0100
+
+krita (1:5.2.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Tweak watch file to actually match more kind of unstable versions.
+  * Update the build dependencies according to the upstream build system:
+    - bump libboost-system-dev to 1.65
+    - bump libeigen3-dev to 3.3.0
+    - add libfontconfig-dev, libfreetype-dev, libharfbuzz-dev, libimmer-dev,
+      libkf5kdcraw-dev, liblager-dev, libmlt-dev, libmlt++-dev, libsdl2-dev,
+      libunibreak-dev, and libzug-dev
+    - add libfribidi-dev, needed for the embedded modified copy of raqm
+    - drop no more needed libkf5itemmodels-dev, libraw-dev, and
+      qtmultimedia5-dev
+
+ -- Pino Toscano <pino@debian.org>  Fri, 13 Oct 2023 07:10:26 +0200
+
+krita (1:5.1.5+dfsg-2) unstable; urgency=medium
+
+  * Extend the libjxl-dev build dependency to all the Linux architectures,
+    as it builds on all of them now.
+  * Drop the removal of x-test "translations", as they are no more shipped.
+  * Add the libturbojpeg0-dev build dependency, now that libjpeg-turbo 2.1.3+
+    is available in Debian.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 03 Feb 2023 20:49:27 +0100
+
+krita (1:5.1.5+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update standards version to 4.6.2, no changes needed.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 05 Jan 2023 22:28:03 +0100
+
+krita (1:5.1.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release:
+    - fixes a crash at shutdown (Closes: #1025104)
+  * Switch the transitional libxcb-util0-dev build dependency to
+    libxcb-util-dev.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 15 Dec 2022 06:08:19 +0100
+
+krita (1:5.1.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Enable the JPEG XL import/export plugins, now that jpeg-xl is available in
+    Debian
+    - add the libjxl-dev build dependency, only on amd64 i386 for now as it is
+      not available on all the architectures
+
+ -- Pino Toscano <pino@debian.org>  Mon, 07 Nov 2022 19:35:00 +0100
+
+krita (1:5.1.1+dfsg-2) unstable; urgency=medium
+
+  * Update install files.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 15 Sep 2022 09:40:09 +0200
+
+krita (1:5.1.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update lintian overrides.
+  * Enable again the LUT docker, as OpenColorIO seems to be back in testing
+    - enable the libopencolorio-dev build dependency
+
+ -- Pino Toscano <pino@debian.org>  Thu, 15 Sep 2022 07:34:49 +0200
+
+krita (1:5.1.0+dfsg-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Switch Vcs-* fields back to 'master'.
+
+ -- Pino Toscano <pino@debian.org>  Mon, 22 Aug 2022 05:41:29 +0200
+
+krita (1:5.1.0+dfsg-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Switch watch file back to the stable releases.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 18 Aug 2022 20:53:18 +0200
+
+krita (1:5.1.0~rc1+dfsg-1) experimental; urgency=medium
+
+  * New upstream development release.
+  * Tweak the watch file to match -RC releases.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 05 Aug 2022 23:18:18 +0200
+
+krita (1:5.1.0~beta2+dfsg-2) experimental; urgency=medium
+
+  * Tweak the architecture list for xsimd support:
+    - change amd64 to any-amd64, as it should work fine on any amd64-based
+      architecture
+    - drop i386, as it is not a supported architecture in xsimd
+    - add any-arm64, as 64bit ARM is supported
+  * Pass -DKRITA_ENABLE_PCH=OFF to cmake to disable the PCH support at build
+    time: it does not seem to provide any noticeable build speed gain, and
+    it consumes a huge amount of disk space.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 16 Jul 2022 08:05:13 +0200
+
+krita (1:5.1.0~beta2+dfsg-1) experimental; urgency=medium
+
+  * New upstream development release.
+  * Tweak watch file to only look in version subdirectories.
+  * Enable the xsimd support:
+    - add the libxsimd-dev & xtl-dev, only on amd64 & i386 for now
+    - xsimd in Debian is built with -DENABLE_XTL_COMPLEX=ON, which makes the
+      xsimd cmake config bits use xtl without requiring it; hence, locally
+      require xtl ourselves for now; patch xsimd-require-xtl.diff
+  * Update install files.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 16 Jul 2022 05:58:19 +0200
+
+krita (1:5.1.0~beta1+dfsg-1) experimental; urgency=medium
+
+  * New upstream development release.
+  * Switch watch file to the unstable releases, mangling -beta in the version.
+  * Switch Vcs-* fields to the 'experimental' packaging branch.
+  * Update the build dependencies according to the upstream build system:
+    - bump the Qt packages to 5.12.0
+    - bump libheif-dev to 1.11.0
+    - drop vc-dev, no more used
+  * As Vc is no more used, do not set anymore the Built-Using header in krita
+    with the version of the vc-dev package used during the build.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 23 Jun 2022 22:47:48 +0200
+
+krita (1:5.0.8+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.6.1, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 26 May 2022 07:14:15 +0200
+
+krita (1:5.0.6+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 28 Apr 2022 05:00:52 +0200
+
+krita (1:5.0.5+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update the patches:
+    - upstream_Fix-build-on-linux-clang-targets.patch: drop, backported from
+      upstream
+  * Temporarily disable the LUT docker, as it needs OpenColorIO, which is out
+    of testing because openvdb has RC bugs and its maintainers don't seem to
+    care
+    - comment out the libopencolorio-dev build dependency
+  * Remove inactive Uploaders.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 14 Apr 2022 08:35:57 +0200
+
+krita (1:5.0.2+dfsg-2) unstable; urgency=medium
+
+  * Add the libkseexpr-dev build dependency to enable the SeExpr generator
+    layer, as KSeExpr is now available in Debian.
+  * Add the libwebp-dev >= 1.2.0 build dependency to enable the WebP
+    import/export plugins, as this version is now available in Debian.
+
+ -- Pino Toscano <pino@debian.org>  Mon, 21 Mar 2022 21:40:00 +0100
+
+krita (1:5.0.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update lintian overrides.
+  * Small changes to copyright.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 07 Jan 2022 11:00:05 +0100
+
+krita (1:5.0.0+dfsg-2) unstable; urgency=medium
+
+  * Switch the libqt5opengl5-desktop-dev to libqt5opengl5-dev, as it seems
+    krita was adapted to work also with OpenGL ES.
+  * Remove the explicit as-needed linking, as it is done by binutils now.
+  * Use /usr/share/dpkg/architecture.mk to get $DEB_HOST_ARCH_CPU instead of
+    manually querying for it.
+  * Use execute_after_dh_auto_install to avoid invoking dh_auto_install
+    manually.
+  * Backport the upstream commit 0b755beaa1fdba03d38f887b93a15a58fc0830c7 to
+    hopefully fix the detection of atomic instructions and the need for the
+    atomic library; patch upstream_Fix-build-on-linux-clang-targets.patch.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 24 Dec 2021 16:04:21 +0100
+
+krita (1:5.0.0+dfsg-1) unstable; urgency=medium
+
+  * Upload to unstable.
+  * New upstream release.
+  * Switch watch file back to the stable releases.
+  * Explicitly add the libqt5sql5-sqlite dependency, needed to make the internal
+    resources working.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 23 Dec 2021 15:07:24 +0100
+
+krita (1:5.0.0~beta5+dfsg-1) experimental; urgency=medium
+
+  * New upstream development release.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 03 Dec 2021 22:01:32 +0100
+
+krita (1:5.0.0~beta3+dfsg-1) experimental; urgency=medium
+
+  * New upstream development release.
+  * Merge changes from 1:4.4.8+dfsg-1.
+  * Update copyright.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 03 Dec 2021 07:57:36 +0100
+
+krita (1:5.0.0~beta1+dfsg-1) experimental; urgency=medium
+
+  * New upstream development release.
+  * Switch watch file to the unstable releases, mangling -beta in the version.
+  * Update the build dependencies according to the upstream build system:
+    - bump cmake to 3.16.0
+    - bump libheif-dev to 1.10.0
+    - bump libopencolorio-dev to 1.1.1
+    - add libmypaint-dev
+  * Pass -DENABLE_UPDATERS=OFF to cmake to disable the own version
+    checker/updater, which is generally not a good idea in a distribution build.
+  * Do not ship the development headers.
+  * Do not ship the testing x-test "translations".
+
+ -- Pino Toscano <pino@debian.org>  Fri, 20 Aug 2021 23:16:09 +0200
+
+krita (1:4.4.8+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.6.0, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 25 Aug 2021 21:24:58 +0200
+
+krita (1:4.4.7+dfsg-1) unstable; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release.
+  * Add myself to uploaders.
+
+  [ Pino Toscano ]
+  * New upstream release:
+    - drops the jpeg/jfif MIME type from krita_jpeg.desktop (Closes: #990184)
+
+ -- Pino Toscano <pino@debian.org>  Sun, 15 Aug 2021 12:51:43 +0200
+
+krita (1:4.4.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update the version of some build dependencies to match their required ones;
+    all are already satisfied in Debian stable.
+  * Bump Standards-Version to 4.5.1, no changes required.
+  * Add a simple upstream/metadata file.
+
+ -- Pino Toscano <pino@debian.org>  Tue, 19 Jan 2021 17:20:44 +0100
+
+krita (1:4.4.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Fix typo in changelog entry for 1:4.4.0+dfsg-1.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 29 Oct 2020 12:56:50 +0100
+
+krita (1:4.4.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release:
+    - fixes compatibility with PyQt5 build with sip5 (Closes: #971173)
+  * Update copyright.
+  * Update install files.
+  * Bump the debhelper compatibility to 13:
+    - switch the debhelper-compat build dependency to 13
+    - stop passing --fail-missing to dh_missing, as it is the default now
+  * Update lintian overrides.
+
+ -- Pino Toscano <pino@debian.org>  Tue, 13 Oct 2020 20:31:56 +0200
+
+krita (1:4.3.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update the build dependencies according to the upstream build system:
+    - bump cmake to 3.0.0
+    - remove libkf5archive-dev, no more needed
+    - add libopenjp2-7-dev
+  * Update copyright.
+  * Add Rules-Requires-Root: no.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 18 Jun 2020 14:00:19 +0200
+
+krita (1:4.2.9+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright.
+  * Bump Standards-Version to 4.5.0, no changes required.
+  * Bump the debhelper compatibility to 12:
+    - switch the debhelper build dependency to debhelper-compat 12
+    - remove debian/compat
+
+ -- Pino Toscano <pino@debian.org>  Mon, 23 Mar 2020 23:48:14 +0100
+
+krita (1:4.2.8.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add the configuration for the CI on salsa.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 27 Nov 2019 19:43:14 +0100
+
+krita (1:4.2.7.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.4.1, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 05 Oct 2019 10:34:00 +0200
+
+krita (1:4.2.6+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 14 Sep 2019 08:09:15 +0200
+
+krita (1:4.2.5+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 02 Aug 2019 20:04:48 +0200
+
+krita (1:4.2.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump various build dependencies, as required by the upstream build system:
+    - extra-cmake-modules to >= 5.22.0
+    - Qt packages to >= 5.9.0
+    - KF5 packages to >= 5.44.0
+
+ -- Pino Toscano <pino@debian.org>  Wed, 31 Jul 2019 22:20:18 +0200
+
+krita (1:4.2.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 20 Jul 2019 08:52:27 +0200
+
+krita (1:4.2.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add the libquazip5-dev build dependency.
+  * Recommend krita-gmic, now that it is finally available in the Debian
+    archive.
+  * Drop the breaks/replaces with the calligra-l10n packages, no more needed
+    now after two stable releases.
+  * Update copyright.
+  * Bump Standards-Version to 4.4.0, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Mon, 08 Jul 2019 21:39:48 +0200
+
+krita (1:4.1.7+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Remove the libkf5kio-dev build dependency, no more used.
+
+ -- Pino Toscano <pino@debian.org>  Mon, 17 Dec 2018 16:30:39 +0100
+
+krita (1:4.1.5+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 11 Oct 2018 21:56:28 +0200
+
+krita (1:4.1.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update the patches:
+    - upstream_Fix-build-with-dcraw-0.19.patch: drop, backported from upstream
+    - upstream_desktop-use-F-instead-of-U.patch: drop, backported from upstream
+    - upstream_desktop-use-f-F-instead-of-u-U-part-2.patch: drop, backported
+      from upstream
+    - upstream_Always-use-the-same-sipname-as-PyQt.patch: drop, backported
+      from upstream
+  * Update copyright.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 27 Sep 2018 23:05:19 +0200
+
+krita (1:4.1.1+dfsg-2) unstable; urgency=medium
+
+  * Backport upstream commit 3b7d0f2cbf66b06e12c57be26b262b71d8030d1a to fix
+    build with libraw >= 0.19; patch upstream_Fix-build-with-dcraw-0.19.patch.
+    (Closes: #905032)
+  * Backport upstream commits 08a64c2c0cb00fecb96ead7f4dd05e22595e74d1, and
+    9042d92c5b508c24ffbcdd6b1201910d63f6af43 to use the %F placeholder instead
+    of %U in desktop files; patches upstream_desktop-use-F-instead-of-U.patch,
+    and upstream_desktop-use-f-F-instead-of-u-U-part-2.patch. (Closes: #905629)
+  * Backport upstream commit 5c084e2439b390fa873e7d107f8ba8ba071971ef to fix
+    the detection of PyQt' sipname; patch
+    upstream_Always-use-the-same-sipname-as-PyQt.patch.
+  * Bump Standards-Version to 4.2.1, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Tue, 04 Sep 2018 08:46:45 +0200
+
+krita (1:4.1.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.1.5, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 18 Jul 2018 10:28:10 +0200
+
+krita (1:4.1.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add the libheif-dev build dependency for the new HEIF plugin.
+  * Switch dh_missing from --list-missing to --fail-missing.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 27 Jun 2018 20:13:42 +0200
+
+krita (1:4.0.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release:
+    - loads correctly the Python library, making the Python scripting usable
+      (Closes: #896098)
+  * Update copyright.
+  * Update Vcs-* fields.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 14 Jun 2018 00:40:01 +0200
+
+krita (1:4.0.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Pino Toscano <pino@debian.org>  Sun, 13 May 2018 08:37:30 +0200
+
+krita (1:4.0.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 11 May 2018 07:44:00 +0200
+
+krita (1:4.0.1+dfsg-1) unstable; urgency=medium
+
+  [ Pino Toscano ]
+  * New upstream release.
+  * Switch Vcs-* fields to salsa.debian.org.
+  * Add build dependencies for new features: libgif-dev, pyqt5-dev,
+    python3-dev, python3-pyqt5, python3-sip-dev, and qtdeclarative5-dev.
+  * Update install files.
+  * Bump the debhelper compatibility to 11:
+    - bump the debhelper build dependency to 11~
+    - bump compat to 11
+    - remove --parallel for dh, as now done by default
+  * Switch from dh_install to dh_missing for --list-missing.
+  * Bump Standards-Version to 4.1.4, no changes required.
+
+  [ Rik Mills ]
+  * Add additional runtime python and QtMultimedia deps, as requested by
+    Krita developers
+
+ -- Pino Toscano <pino@debian.org>  Sat, 14 Apr 2018 09:41:21 +0200
+
+krita (1:3.3.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Use https in the watch file.
+  * Update copyright.
+  * Bump Standards-Version to 4.1.3, no changes required.
+  * Add the libqt5opengl5-desktop-dev build dependency, as krita supports only
+    Desktop OpenGL.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 13 Jan 2018 10:10:22 +0100
+
+krita (1:3.3.2.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 04 Nov 2017 07:57:38 +0100
+
+krita (1:3.3.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Remove mentions of Calligra from descriptions. (Closes: #877631)
+  * Update copyright.
+  * Bump Standards-Version to 4.1.1, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 11 Oct 2017 20:58:58 +0200
+
+krita (1:3.3.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop all the pre-Jessie replaces/breaks.
+  * Bump Standards-Version to 4.1.0, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 28 Sep 2017 11:28:26 +0200
+
+krita (1:3.2.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop the libcurl4-gnutls-dev build dependency, no more searched by the
+    upstream build system.
+
+ -- Pino Toscano <pino@debian.org>  Fri, 25 Aug 2017 20:32:08 +0200
+
+krita (1:3.2.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release:
+    - fixes scroll wheel behavior with Qt 5.7+ (Closes: #871482)
+
+  [ Simon Quigley ]
+  * Run wrap-and-sort to organize debian/control.
+
+  [ Pino Toscano ]
+  * Drop removal of gmicparser, no more shipped upstream.
+  * Bump Standards-Version to 4.0.1, no changes required.
+  * Small copyright update.
+  * Update lintian overrides.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 19 Aug 2017 08:56:22 +0200
+
+krita (1:3.1.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update the build dependencies:
+    - add qtmultimedia5-dev, for the animation features
+    - add vc-dev (only on i386 and amd64 architectures), since it is available
+      in Debian
+    - bump all the Qt packages to 5.6.0, as required by the upstream build
+      system
+  * Drop the -DPACKAGERS_BUILD=ON cmake parameter, as that option is gone.
+  * Update copyright.
+  * Record as Built-Using the version of the source of vc-dev used for the
+    build.
+
+ -- Pino Toscano <pino@debian.org>  Sun, 18 Jun 2017 06:57:06 +0200
+
+krita (1:3.1.1+dfsg-1) unstable; urgency=medium
+
+  * Upload to unstable. (Closes: #811432)
+  * New upstream release.
+  * Update watch file.
+  * Update Vcs-* fields.
+  * Update copyright.
+  * Pass -DFOUNDATION_BUILD=OFF to cmake to enforce it, to make sure resources
+    provided by distro packages are not installed.
+    - stop removing the Breeze color schemes, they are not installed anymore
+  * Suggest ffmpeg, used for the video export.
+  * Update lintian overrides.
+  * Enable the OpenEXR support again -- it seems the conflict with Eigen3
+    headers is gone
+    - add the libopenexr-dev build dependency
+  * Add Breaks/Replaces for all the calligra-l10n packages prior to < 2.9.11,
+    i.e. when krita was split out of calligra (in Debian).
+
+ -- Pino Toscano <pino@debian.org>  Fri, 23 Dec 2016 14:43:45 +0100
+
+krita (1:3.0.1+dfsg-1) experimental; urgency=low
+
+  * Initial release.
+
+ -- Pino Toscano <pino@debian.org>  Sun, 11 Sep 2016 11:46:46 +0200

@@ -1,0 +1,4 @@
+# in-application documentations of Python plugins
+krita-data: package-contains-documentation-outside-usr-share-doc [usr/share/krita/pykrita/*]
+# Krita preset files have a special extension
+krita-data: image-file-has-unexpected-name (is PNG) [usr/share/krita/*.kpp]
