@@ -1,0 +1,6 @@
+# private library
+krita: package-name-doesnt-match-sonames
+# private library
+krita: no-symbols-control-file
+# small helper library that uses only Qt
+krita: library-not-linked-against-libc [usr/lib/*/libkritaversion.so.*]

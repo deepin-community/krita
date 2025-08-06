@@ -1,4 +1,18 @@
 #!/usr/bin/make -f
 
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
 %:
-	dh $@
+	dh $@ --with kf5
+
+override_dh_auto_configure:
+	dh_auto_configure -Skf5 -- -DFOUNDATION_BUILD=OFF -DBUILD_TESTING=OFF -DENABLE_UPDATERS=OFF -DKRITA_ENABLE_PCH=OFF
+
+execute_after_dh_auto_install:
+	# remove symlinks of private libraries
+	find debian/tmp -name '*.so' -type l -print -delete
+	# remove development headers
+	rm -rfv debian/tmp/usr/include/
+
+.PHONY: override_dh_auto_test
